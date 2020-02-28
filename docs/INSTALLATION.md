@@ -17,7 +17,7 @@ sudo -u postgres createdb -O ubuntu tweets
 ### Remote read-only connection
 
 ```bash
-sudo -u postgres psql
+sudo -u postgres psql -d tweets
 ```
 
 ```sql
@@ -26,6 +26,7 @@ GRANT CONNECT ON DATABASE tweets TO group11;
 GRANT USAGE ON SCHEMA public TO group11;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO group11;
 GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO group11;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO group11;
 ```
 
 In `/etc/postgresql/11/main/postgresql.conf` allow remote connections:
