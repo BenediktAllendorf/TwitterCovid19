@@ -53,3 +53,21 @@ sudo ufw enable
 ```
 
 Now the DB should be open for the read-only user `group11` via IP connections.
+
+## Deploy
+
+Clone repo to server and install Python 3 requirements
+```bash
+sudo apt install python3-pip python3-dev libpq-dev
+pip3 install --upgrade pip
+pip3 install virtualenv
+python3 -m virtualenv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
+```
+
+Then run it (virtualenv must be activated):
+
+```
+python3 main.py
+```
