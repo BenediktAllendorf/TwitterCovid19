@@ -16,7 +16,7 @@ def connect(settings):
     return twitter.Twitter(auth=auth)
 
 
-def scrape(twitter_api, query, region_name, min_id, max_id, count=100):
+def scrape(twitter_api, query, region_name, min_id, max_id, resume=False, count=100):
     search_results = None
     while search_results is None or \
             (len(search_results['statuses']) > 0 and 'max_id' in search_results['search_metadata']):
@@ -66,7 +66,7 @@ def scrape(twitter_api, query, region_name, min_id, max_id, count=100):
         min_id = oldest_tweet['id']
         logging.getLogger().info('Saved')
 
-        if max_id is not None and max_id > oldest_tweet['id']:
+        if not resume and max_id is not None and max_id > oldest_tweet['id']:
             logging.getLogger().info('Reached last scraping')
             search_results['statuses'] = []
 
@@ -154,5 +154,6 @@ if __name__ == '__main__':
         'Scraping ' + ('(resume) ' if args.resume else '') + 'query="' + query + '", min_id=' +
         str(min_id) + ', max_id=' + str(max_id))
 
-    scrape(connect(settings), query, region_name, min_id=min_id if args.resume else None, max_id=max_id)
+    scrape(connect(settings), query, region_name, min_id=min_id if args.resume else None, max_id=max_id,
+           resume=args.resume)
     rootLogger.info('Done scraping')
