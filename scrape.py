@@ -32,7 +32,7 @@ def scrape(twitter_api, query, region_name, min_id, max_id, resume=False, count=
             except TwitterHTTPError as error:
                 if error.response_data['errors'][0]['message'] == 'Rate limit exceeded':
                     logging.getLogger().warning('Sleep ...')
-                    time.sleep(1)
+                    time.sleep(60 * 5)
                 else:
                     raise error
 
