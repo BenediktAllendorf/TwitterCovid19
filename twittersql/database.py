@@ -18,13 +18,13 @@ def init_db():
         print("Creating table `tweet`...")
         Tweet.__table__.create(bind=engine)
 
-def write_tweet(tweet):
+def write_tweet(tweet, region_name, geocode):
     """Write unique tweet into database, discard duplicates"""
     tweet_id = str(tweet['id'])
     # check if tweet_id already exists
     duplicate = session.query(Tweet).filter(Tweet.tweet_id == tweet_id).one_or_none()
     if not duplicate:
-        t = Tweet(tweet_id=tweet_id, tweet_body=tweet)
+        t = Tweet(tweet_id=tweet_id, tweet_body=tweet, location_id=region_name, location_query=geocode)
         try:
             session.add(t)
             session.commit()

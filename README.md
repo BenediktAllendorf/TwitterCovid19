@@ -2,7 +2,6 @@
 
 Load Tweets from Search API to JSON files and load them into a PostgreSQL database as JSONB.
 
-
 TODO:
 
 * merge with Tweet streaming component, or use separate repository / running on cronjob
@@ -21,6 +20,8 @@ See [docs/os_provision.md](docs/os_provision.md)
 * run `scrape.py $regionName --resume` to start scraping backward from the oldest tweet
 
 ## Loading JSON into database
+
+* run `load_to_database.py $regionName` to load the respective files into the database
 ```bash
 source .venv/bin/activate
 python load_to_database.py
