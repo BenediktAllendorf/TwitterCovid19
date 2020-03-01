@@ -1,2 +1,3 @@
+twitter
 psycopg2==2.8.4
 SQLAlchemy==1.3.13
