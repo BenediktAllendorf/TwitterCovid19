@@ -11,9 +11,8 @@ def load_json(path):
         raise FileNotFoundError("File not found: {}".format(path))
 
 
-def find_json_files(folder='sample'):
+def find_json_files(folder):
     """Recursively find all json files in folder that end with *{numbers}.json and yield path"""
-
     file_pattern = r'^.*[0-9]{10,}\.json$'
     for dirpath, dirnames, filenames in os.walk(folder):
         for filename in [f for f in filenames if bool(re.compile(file_pattern).match(f))]:
