@@ -3,5 +3,5 @@
   "consumer_secret": "",
   "oauth_token": "",
   "oauth_token_secret": "",
-  "default_query": "#Coronavirus+OR+#cronavirus+OR+#CoronavirusOutbreak"
+  "default_query": "#Coronavirus+OR+#CoronavirusOutbreak+OR+#COVID-19+OR+#COVID19+OR+#CoronavirusUpdate"
 }
