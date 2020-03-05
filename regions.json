@@ -1,17 +1,35 @@
 {
   "germany1": {
-    "geocode": "52.282586,10.601166,250km"
+    "geocode": "52.739184,10.627171,236.4km"
   },
   "germany2": {
-    "geocode": "48.871669,10.488771,150km"
+    "geocode": "51.753988,12.457496,142.434km"
   },
   "germany3": {
-    "geocode": "50.102205,7.750024,100km"
+    "geocode": "51.358081,7.207764,69.343km"
   },
-  "italy1": {
-    "geocode": "44.84,10.91,200km"
+  "germany4": {
+    "geocode": "50.496732,8.736488,170.602km"
   },
-  "italy2": {
-    "geocode": "40.85,15.32,235km"
+  "germany5": {
+    "geocode": "49.000985,10.452385,165.858km"
+  },
+  "germany6": {
+    "geocode": "48.054800,8.147429,39.891km"
+  },
+  "netherlands1": {
+    "geocode": "52.944864,4.316700,163km"
+  },
+  "netherlands2": {
+    "geocode": "52.314066,6.025588,49.7km"
+  },
+  "netherlands3": {
+    "geocode": "51.532413,3.796285,28.8km"
+  },
+  "netherlands4": {
+    "geocode": "51.557595,5.585039,32km"
+  },
+  "netherlands5": {
+    "geocode": "50.888106,5.843230,15km"
   }
 }
