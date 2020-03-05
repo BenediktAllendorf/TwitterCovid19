@@ -22,8 +22,7 @@ See [docs/os_provision.md](docs/os_provision.md)
 ## Loading JSON into database
 
 * run `load_to_database.py $regionName` to load the respective files into the database
-```bash
-source .venv/bin/activate
-python load_to_database.py
 
-```
+## Annotating tweets
+
+* run `annotate.py $regionName` to annotate tweets in the database with DBPedia Spotlight

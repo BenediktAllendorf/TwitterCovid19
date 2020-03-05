@@ -9,14 +9,15 @@ from twittersql.database import write_tweet
 
 JSON_FOLDER = os.path.join('tweets', 'unprocessed')
 #JSON_FOLDER = os.path.join('sample') # dev
+REGIONS = os.path.join('regions.json')
 
-def parse_region():
+def parse_region(path):
     """Get the proper region and geocode from regions.json"""
     parser = argparse.ArgumentParser()
     parser.add_argument('region')
     args = parser.parse_args()
 
-    with open('regions.json', 'r') as f:
+    with open(path, 'r') as f:
         regions = json.load(f)
 
     region_name = args.region
@@ -27,7 +28,7 @@ def parse_region():
     return region_name, geo_code
 
 def main():
-    region_name, geocode = parse_region()
+    region_name, geocode = parse_region(REGIONS)
     print("Files folder: '{}' Region: '{}' Geocode: '{}'".format(JSON_FOLDER, region_name, geocode))
     time.sleep(4)
 

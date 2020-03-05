@@ -35,3 +35,13 @@ def write_tweet(tweet, region_name, geocode):
             session.close()
     else:
         print("duplicate tweet")
+
+def tweets_without_concepts(region):
+    """Get tweets from region where tweet.concepts is null"""
+    return session.query(Tweet).filter(Tweet.concepts == None).filter(Tweet.location_id == region).all()
+
+def update_tweet_concepts(tweet_id, concepts):
+    """Update tweet with concepts. Concepts should be JSON serializable."""
+    session.query(Tweet).filter(Tweet.tweet_id == tweet_id).update({Tweet.concepts: concepts})
+    session.commit()
+    #session.close()
