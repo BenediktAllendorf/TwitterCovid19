@@ -21,7 +21,7 @@ def parse_region():
 
     region_name = args.region
     if region_name not in regions.keys():
-        raise argparse.ArgumentError("Not a valid region:  {}".format(region_name))
+        raise ValueError("Not a valid region:  {}".format(region_name))
     else:
         geo_code = regions[region_name].get('geocode')
     return region_name, geo_code
