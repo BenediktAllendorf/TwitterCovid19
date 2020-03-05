@@ -15,3 +15,4 @@ class Tweet(Base):
     inserted = Column(DateTime, default=datetime.now)
     location_id = Column(String(100))
     location_query = Column(String(100))
+    concepts = Column(JSONB)
