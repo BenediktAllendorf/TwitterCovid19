@@ -108,6 +108,9 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--resume', action='store_true',
                         help="Resume with latest min_id")
 
+    parser.add_argument('-noo', '--no_output', action='store_true',
+                        help="If set, nothing will be printed to the terminal.")
+
     parser.add_argument('region')
     parser.add_argument('-q', '--query', default=settings['default_query'])
 
@@ -134,9 +137,10 @@ if __name__ == '__main__':
     fileHandler.setFormatter(logFormatter)
     rootLogger.addHandler(fileHandler)
 
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setFormatter(logFormatter)
-    rootLogger.addHandler(consoleHandler)
+    if not args.no_output:
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(logFormatter)
+        rootLogger.addHandler(consoleHandler)
 
     if os.path.exists(os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/status.json')):
         with open(os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/status.json')) as file:
