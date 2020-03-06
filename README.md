@@ -16,8 +16,9 @@ See [docs/os_provision.md](docs/os_provision.md)
 ## Parsing tweets from Twitter Search API to JSON
 * copy `settings.dist.json` to `settings.json`and insert twitter credentials
 * all regions to scrape should be in `regions.json` (and be commited to git)
-* run `scrape.py $regionName` to start scraping backward from the current time (this will detect if tweets are reached that have been scraped. Then the script stops)
-* run `scrape.py $regionName --resume` to start scraping backward from the oldest tweet
+* run `load_tweets.py $regionName` to start scraping backward from the current time (this will detect if tweets are reached that have been scraped. Then the script stops)
+* run `load_tweets.py $regionName --resume` to start scraping backward from the oldest tweet
+* add `--no_output` to prevent any logs being printed to the console
 
 ## Loading JSON into database
 
