@@ -77,7 +77,7 @@ def convert_twitter_datetime_str(twitter_datetime_str):
 
 def save_tweet(region_name, tweet):
     created_at = convert_twitter_datetime_str(tweet['created_at'])
-    path = 'tweets/unprocessed/' + region_name + '/' + created_at.strftime('%Y/%m/%d/%H/%M')
+    path = os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/' + created_at.strftime('%Y/%m/%d/%H/%M'))
     os.makedirs(path, exist_ok=True)
 
     with open(path + '/' + tweet['id_str'] + '.json', 'w') as file:
@@ -85,7 +85,7 @@ def save_tweet(region_name, tweet):
 
 
 def save_status(region_name, min_id, max_id):
-    path = 'tweets/unprocessed/' + region_name
+    path = os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name)
     os.makedirs(path, exist_ok=True)
 
     with open(path + '/status.json', 'r+') as file:
@@ -100,7 +100,7 @@ def save_status(region_name, min_id, max_id):
 
 if __name__ == '__main__':
 
-    with open('settings.json') as file:
+    with open(os.path.join(sys.path[0], 'settings.json')) as file:
         settings = json.load(file)
 
     parser = argparse.ArgumentParser()
@@ -116,14 +116,14 @@ if __name__ == '__main__':
     region_name = args.region
     query = args.query
 
-    with open('regions.json') as file:
+    with open(os.path.join(sys.path[0], 'regions.json')) as file:
         regions = json.load(file)
 
     if region_name not in regions:
         logging.error('Region not known!?')
         exit(1)
 
-    path = 'tweets/unprocessed/' + region_name + '/'
+    path = os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/')
     os.makedirs(path, exist_ok=True)
 
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s] %(message)s")
@@ -138,8 +138,8 @@ if __name__ == '__main__':
     consoleHandler.setFormatter(logFormatter)
     rootLogger.addHandler(consoleHandler)
 
-    if os.path.exists('tweets/unprocessed/' + region_name + '/status.json'):
-        with open('tweets/unprocessed/' + region_name + '/status.json') as file:
+    if os.path.exists(os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/status.json')):
+        with open(os.path.join(sys.path[0], 'tweets/unprocessed/' + region_name + '/status.json')) as file:
             data = json.load(file)
             min_id = data['min_id']
             max_id = data['max_id']
