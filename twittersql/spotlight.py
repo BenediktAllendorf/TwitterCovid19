@@ -2,8 +2,8 @@ import re
 
 import spotlight
 
-SPOTLIGHT_DE = 'http://api.dbpedia-spotlight.org/de/annotate'
-SPOTLIGHT_NL = 'http://api.dbpedia-spotlight.org/nl/annotate'
+SPOTLIGHT_DE = 'http://89.145.161.92/rest/annotate'
+SPOTLIGHT_NL = 'http://89.145.162.101/rest/annotate'
 
 def get_annotation(language, text):
     if language == 'nl':
