@@ -57,7 +57,6 @@ def main():
             except SpotlightException as e:
                 logger.warning(e)
             else:
-                logger.info("{}/{} - Inserting concepts for tweet {} into db".format(index, amount, tweet_id,))
                 update_tweet_concepts(tweet_id, r)
                 forms = ', '.join([t['surfaceForm'] for t in r])
                 logger.info("{}/{} - tweet_id: {} - forms: {}".format(index, amount, tweet_id, forms))
