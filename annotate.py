@@ -5,6 +5,7 @@ import os
 import time
 import logging
 from spotlight import SpotlightException
+from requests import RequestException
 
 from twittersql.database import tweets_without_concepts, update_tweet_concepts
 from twittersql.spotlight import clean_tweet, get_annotation
@@ -67,6 +68,8 @@ def main():
                 except SpotlightException as e:
                     logger.warning(e)
                     no_resources_found.add(tweet_id)
+                except RequestException as e:
+                    logger.error(e)
                 else:
                     update_tweet_concepts(tweet_id, r)
                     forms = ', '.join([t['surfaceForm'] for t in r])
