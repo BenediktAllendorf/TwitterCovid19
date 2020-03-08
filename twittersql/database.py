@@ -42,6 +42,5 @@ def tweets_without_concepts(region):
 
 def update_tweet_concepts(tweet_id, concepts):
     """Update tweet with concepts. Concepts should be JSON serializable."""
-    session.query(Tweet).filter(Tweet.tweet_id == tweet_id).update({Tweet.concepts: concepts})
+    session.query(Tweet).filter(Tweet.tweet_id == tweet_id).update({Tweet.concepts: concepts}, synchronize_session=False)
     session.commit()
-    #session.close()
