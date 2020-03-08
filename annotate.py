@@ -2,46 +2,64 @@ import json
 import argparse
 import os
 import time
+import logging
+from spotlight import SpotlightException
 
 from twittersql.database import tweets_without_concepts, update_tweet_concepts
 from twittersql.spotlight import clean_tweet, get_annotation
 
-REGIONS = os.path.join('regions.json')
 
-
-def parse_region(path):
-    """Get the proper region and geocode and language from regions.json"""
+def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('region')
-    args = parser.parse_args()
+    parser.add_argument('--quiet', action='store_true')
+    return parser.parse_args()
 
+def read_regions(path=os.path.join('regions.json')):
+    """Load regions JSON file"""
     with open(path, 'r') as f:
         regions = json.load(f)
-
-    region_name = args.region
-    if region_name not in regions.keys():
-        raise ValueError("Not a valid region:  {}".format(region_name))
-    else:
-        geo_code = regions[region_name].get('geocode')
-    language = regions[region_name].get('language')
-    return region_name, geo_code, language
+    return regions
 
 def main():
-    region, geocode, language = parse_region(REGIONS)
 
-    twc = tweets_without_concepts(region)
-    amount = len(list(twc))
-    print("{} Tweets to annotate".format(amount))
-    time.sleep(2)
+    args = parse_args()
 
-    # loop over tweets and annotate them and write back into the db with the JSON response
-    for index, tweet in enumerate(twc):
-        tweet_id = tweet.tweet_id
-        text = tweet.tweet_body.get('text')
-        clean = clean_tweet(text)
-        r = get_annotation(language=language, text=clean)
-        update_tweet_concepts(tweet_id, r)
-        print("{}/{} - tweet_id: {} - annotated: {}".format(index, amount, tweet_id, json.dumps(r)))
+    logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s] %(message)s")
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+    fileHandler = logging.FileHandler("annotate.log")
+    fileHandler.setFormatter(logFormatter)
+    logger.addHandler(fileHandler)
+
+    if not args.quiet:
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(logFormatter)
+        logger.addHandler(consoleHandler)
+
+    regions = read_regions()
+
+    for region in regions:
+        logger.info(region)
+        language = regions[region]['language']
+        twc = tweets_without_concepts(region)
+        amount = len(list(twc))
+        logger.info("{} tweets to annotate".format(amount))
+        time.sleep(1)
+
+        # loop over tweets and annotate them and write back into the db with the JSON response
+        for index, tweet in enumerate(twc):
+            tweet_id = tweet.tweet_id
+            text = tweet.tweet_body.get('text')
+            clean = clean_tweet(text)
+            try:
+                r = get_annotation(language=language, text=clean)
+            except SpotlightException as e:
+                logger.warning(e)
+            else:
+                update_tweet_concepts(tweet_id, r)
+                forms = ', '.join([t['surfaceForm'] for t in r])
+                logger.info("{}/{} - tweet_id: {} - forms: {}".format(index, amount, tweet_id, forms))
 
 
 
