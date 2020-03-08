@@ -33,8 +33,9 @@ def write_tweet(tweet, region_name, geocode):
             print("Error: {}".format(e))
         finally:
             session.close()
+            return True
     else:
-        print("duplicate tweet")
+        return False
 
 def tweets_without_concepts(region):
     """Get tweets from region where tweet.concepts is null"""
