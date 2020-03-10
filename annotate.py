@@ -46,6 +46,8 @@ def main():
         with open('no_resources_found.pickle', 'rb') as f:
             no_resources_found = pickle.load(f)
     except (FileNotFoundError, OSError):
+        logger.warning("Setting up new NRF pickle ")
+        time.sleep(5)
         no_resources_found = set()
 
     for region in regions:
@@ -73,7 +75,8 @@ def main():
                 else:
                     update_tweet_concepts(tweet_id, r)
                     forms = ', '.join([t['surfaceForm'] for t in r])
-                    logger.info("{}/{} - tweet_id: {} - forms: {}".format(index, amount, tweet_id, forms))
+                    logger.info("{}/{} {} ({}) - tweet_id: {} - forms: {}".format(
+                        index, amount, region, language, tweet_id, forms))
         else:
             with open('no_resources_found.pickle', 'wb') as f:
                 pickle.dump(no_resources_found, f)

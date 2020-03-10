@@ -1,7 +1,6 @@
 import os
 import time
 import json
-import argparse
 
 from twittersql.database import init_db
 from twittersql.utils import find_json_files, load_json
@@ -29,7 +28,7 @@ def main():
         iterator = find_json_files(JSON_FOLDER, region)
 
         amount = len(list(iterator))
-        print("Region: {} - {} JSON files loaded".format(region, amount))
+        print("Region: {} - {} JSON files found".format(region, amount))
         time.sleep(2)
 
         for index, file in enumerate(find_json_files(JSON_FOLDER, region)):
@@ -37,8 +36,8 @@ def main():
             unique = write_tweet(data, region, geocode)
             if unique:
                 print("{}/{} - imported tweet into db: {}".format(index, amount, file))
-            else:
-                print("{}/{} - Duplicate tweet: {}".format(index, amount, file))
+            #else:
+            #print("{}/{} - Duplicate tweet: {}".format(index, amount, file))
 
 if __name__ == '__main__':
     main()
