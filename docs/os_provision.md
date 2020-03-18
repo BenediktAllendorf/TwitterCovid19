@@ -66,3 +66,11 @@ python3 -m virtualenv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
+
+## DBpedia
+```bash
+sudo apt install docker.io
+(sudo) docker pull dbpedia/spotlight-english
+(sudo) docker run -d -p 80:80 dbpedia/spotlight-english spotlight.sh
+```
+Replace `english` with e.g. `dutch` for other languages (see https://github.com/dbpedia-spotlight/spotlight-docker)
